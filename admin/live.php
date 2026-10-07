@@ -7,7 +7,7 @@ $totalActive = (int)$pdo->query("SELECT COUNT(*) FROM employees WHERE status = '
 
 $pageTitle = 'Live Monitor';
 $active    = 'live';
-$eyebrow   = 'Real-time monitoring';
+$eyebrow   = 'Real time monitoring';
 $subtitle  = 'See who is clocked in and how their salary grows in real time.';
 require '../includes/header.php';
 ?>
@@ -116,7 +116,7 @@ function applyFilter() {
 
 function tick() {
     const now = new Date();
-    document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB');
+    document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
     document.getElementById('cdate').textContent = now.toLocaleDateString('en-US', {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
