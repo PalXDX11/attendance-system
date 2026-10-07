@@ -45,8 +45,8 @@ $nav = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($pageTitle) ?> | Oppa's Samgyeopsal</title>
-    <link rel="stylesheet" href="/attendance/assets/style.css">
-    <link rel="icon" href="/attendance/assets/images/logo.jpeg">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="icon" href="../assets/images/logo.jpeg">
 </head>
 <body>
 <div class="app">
@@ -83,7 +83,7 @@ $nav = [
     <div class="main">
         <div class="page-top">
             <span class="portal-label">
-                <img src="/attendance/assets/images/icons/layout-dashboard.svg" alt="">
+                <img src="../assets/images/icons/layout-dashboard.svg" alt="">
                 Attendance &amp; Payroll Portal
             </span>
             <span class="date-pill">

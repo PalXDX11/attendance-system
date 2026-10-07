@@ -22,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="/attendance/assets/images/logo.jpeg">
+    <link rel="icon" href="assets/images/logo.jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login | Oppa's Samgyeopsal</title>
-    <link rel="stylesheet" href="/attendance/assets/style.css">
+    <link rel="stylesheet" href="assets/style.css">
     <style>
         body.login-split { display: flex; min-height: 100vh; background: var(--bg); }
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex; flex-direction: column; justify-content: space-between;
             padding: 44px 48px 48px;
             color: #fff;
-            background: #181614 url('/attendance/assets/images/login-bg.jpg') center / cover no-repeat;
+            background: #181614 url('assets/images/login-bg.jpg') center / cover no-repeat;
             overflow: hidden;
         }
         .ls-left::before {
@@ -114,9 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Every shift counts. Every minute stays transparent.</h2>
             <p>A secure biometric attendance workspace built for the people who keep Oppa&rsquo;s Samgyeopsal moving.</p>
             <ul>
-                <li><img src="/attendance/assets/images/icons/fingerprint.svg" alt="">Biometric verified</li>
-                <li><img src="/attendance/assets/images/icons/timer.svg" alt="">Real-time salary</li>
-                <li><img src="/attendance/assets/images/icons/shield-check.svg" alt="">Transparent deductions</li>
+                <li><img src="assets/images/icons/fingerprint.svg" alt="">Biometric verified</li>
+                <li><img src="assets/images/icons/timer.svg" alt="">Real-time salary</li>
+                <li><img src="assets/images/icons/shield-check.svg" alt="">Transparent deductions</li>
             </ul>
         </div>
 
@@ -145,20 +145,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div>
                     <label for="username">Username</label>
                     <div class="ls-input">
-                        <img src="/attendance/assets/images/icons/user-round.svg" alt="">
+                        <img src="assets/images/icons/user-round.svg" alt="">
                         <input type="text" id="username" name="username" placeholder="Enter your username" required autofocus>
                     </div>
                 </div>
                 <div>
                     <label for="password">Password</label>
                     <div class="ls-input">
-                        <img src="/attendance/assets/images/icons/lock-keyhole.svg" alt="">
+                        <img src="assets/images/icons/lock-keyhole.svg" alt="">
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn-block">Sign in <img src="/attendance/assets/images/icons/arrow-right.svg" alt=""></button>
+            <button type="submit" class="btn-block">Sign in <img src="assets/images/icons/arrow-right.svg" alt=""></button>
         </form>
 
         <div class="ls-foot">Biometric Attendance and Real-Time Salary Calculation System</div>
