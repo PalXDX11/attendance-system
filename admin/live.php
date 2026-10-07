@@ -7,7 +7,7 @@ $totalActive = (int)$pdo->query("SELECT COUNT(*) FROM employees WHERE status = '
 
 $pageTitle = 'Live Monitor';
 $active    = 'live';
-$eyebrow   = 'Real-time monitoring';
+$eyebrow   = 'Real time monitoring';
 $subtitle  = 'See who is clocked in and how their salary grows in real time.';
 require '../includes/header.php';
 ?>

@@ -42,9 +42,9 @@ $history = $pdo->query("
     LIMIT 100
 ")->fetchAll();
 
-$pageTitle = 'Deductions';
+$pageTitle = 'Authorized deductions';
 $active    = 'deductions';
-$eyebrow   = 'Pay adjustments';
+$eyebrow   = 'Payroll administration';
 $subtitle  = 'Apply deductions to employees. Every deduction is logged.';
 require '../includes/header.php';
 ?>
@@ -52,36 +52,62 @@ require '../includes/header.php';
 <?php if ($msg) echo "<div class='msg success'>$msg</div>"; ?>
 <?php if ($err) echo "<div class='msg error'>" . htmlspecialchars($err) . "</div>"; ?>
 
-<form method="POST" class="card form-row" onsubmit="return confirm('Apply this deduction?');">
-    <select name="employee_id" required>
-        <option value="">Select employee</option>
-        <?php foreach ($employees as $e): ?>
-            <option value="<?= $e['id'] ?>"><?= htmlspecialchars($e['name']) ?></option>
-        <?php endforeach; ?>
-    </select>
-    <input type="number" step="0.01" min="0.01" name="amount" placeholder="Amount (₱)" required>
-    <input type="text" name="reason" placeholder="Reason" maxlength="255" size="30" required>
-    <button type="submit">Apply Deduction</button>
-</form>
+<div class="split-form">
+    <div class="panel">
+        <div class="panel-head">
+            <div>
+                <h3>Apply a deduction</h3>
+                <span class="small">Every deduction is recorded with a reason.</span>
+            </div>
+        </div>
+        <form method="POST" class="panel-body form-stack" onsubmit="return confirm('Apply this deduction?');">
+            <div class="field">
+                <label for="employee_id">Employee</label>
+                <select name="employee_id" id="employee_id" required>
+                    <option value="">Select employee</option>
+                    <?php foreach ($employees as $e): ?>
+                        <option value="<?= $e['id'] ?>"><?= htmlspecialchars($e['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="field">
+                <label for="amount">Amount (₱)</label>
+                <input type="number" step="0.01" min="0.01" name="amount" id="amount" placeholder="0.00" required>
+            </div>
+            <div class="field">
+                <label for="reason">Reason</label>
+                <textarea name="reason" id="reason" maxlength="255" placeholder="Reason" required></textarea>
+            </div>
+            <button type="submit" class="btn-block">Apply Deduction</button>
+        </form>
+    </div>
 
-<h2>History</h2>
-<?php if ($history): ?>
-<div class="table-wrap">
-    <table>
-        <tr><th>Date</th><th>Employee</th><th>Amount</th><th>Reason</th><th>Applied by</th></tr>
-        <?php foreach ($history as $h): ?>
-        <tr>
-            <td><?= htmlspecialchars($h['created_at']) ?></td>
-            <td><?= htmlspecialchars($h['name']) ?></td>
-            <td class="amount">-₱<?= number_format($h['amount'], 2) ?></td>
-            <td><?= htmlspecialchars($h['reason']) ?></td>
-            <td><?= htmlspecialchars($h['username']) ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+    <div class="panel">
+        <div class="panel-head">
+            <div>
+                <h3>Deductions history</h3>
+                <span class="small">Latest 100 deductions.</span>
+            </div>
+        </div>
+        <?php if ($history): ?>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Date</th><th>Employee</th><th>Amount</th><th>Reason</th><th>Applied by</th></tr>
+                <?php foreach ($history as $h): ?>
+                <tr>
+                    <td><?= htmlspecialchars($h['created_at']) ?></td>
+                    <td><?= htmlspecialchars($h['name']) ?></td>
+                    <td class="amount">-₱<?= number_format($h['amount'], 2) ?></td>
+                    <td><?= htmlspecialchars($h['reason']) ?></td>
+                    <td><?= htmlspecialchars($h['username']) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <?php else: ?>
+            <div class="empty">No deductions yet.</div>
+        <?php endif; ?>
+    </div>
 </div>
-<?php else: ?>
-    <div class="empty">No deductions yet.</div>
-<?php endif; ?>
 
 <?php require '../includes/footer.php'; ?>

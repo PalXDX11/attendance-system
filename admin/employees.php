@@ -66,7 +66,7 @@ $employees = $pdo->query("SELECT * FROM employees ORDER BY id")->fetchAll();
 
 $pageTitle = 'Employees';
 $active    = 'employees';
-$eyebrow   = 'People';
+$eyebrow   = 'Payroll administration';
 $subtitle  = 'Add employees, edit hourly rates, and activate or deactivate accounts.';
 require '../includes/header.php';
 ?>
@@ -87,7 +87,12 @@ require '../includes/header.php';
         <?php foreach ($employees as $e): ?>
         <tr class="<?= $e['status'] === 'inactive' ? 'inactive' : '' ?>">
             <td><?= $e['id'] ?></td>
-            <td><?= htmlspecialchars($e['name']) ?></td>
+            <td>
+                <div class="emp">
+                    <span class="avatar"><?= htmlspecialchars(initials($e['name'])) ?></span>
+                    <?= htmlspecialchars($e['name']) ?>
+                </div>
+            </td>
             <td><?= $e['fingerprint_id'] ?></td>
             <td>
                 <form method="POST" class="inline">

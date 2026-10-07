@@ -27,15 +27,15 @@ $subtitle  = $subtitle ?? '';
 
 // key => [label, link, svg icon shapes]
 $nav = [
-    'dashboard' => ['Dashboard', 'dashboard.php',
-        '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>'],
-    'live' => ['Live Monitor', 'live.php',
-        '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/>'],
+    'dashboard' => ['Overview', 'dashboard.php',
+        '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>'],
+    'live' => ['Live attendance', 'live.php',
+        '<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/>'],
+    'deductions' => ['Authorized deductions', 'deductions.php',
+        '<circle cx="12" cy="12" r="10"/><path d="M8 12h8"/>'],
     'employees' => ['Employees', 'employees.php',
-        '<path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'],
-    'deductions' => ['Deductions', 'deductions.php',
-        '<circle cx="12" cy="12" r="9"/><line x1="8" y1="12" x2="16" y2="12"/>'],
-    'payroll' => ['Payroll Summary', 'payroll.php',
+        '<path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>'],
+    'payroll' => ['Payroll summary', 'payroll.php',
         '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16" cy="14.5" r="1"/>'],
 ];
 ?>
@@ -46,7 +46,6 @@ $nav = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($pageTitle) ?> | Oppa's Samgyeopsal</title>
     <link rel="stylesheet" href="/attendance/assets/style.css">
-
     <link rel="icon" href="/attendance/assets/images/logo.jpeg">
 </head>
 <body>
@@ -54,18 +53,18 @@ $nav = [
 
     <aside class="sidebar">
         <div class="sb-brand">
-            <img src="/attendance/assets/images/logo.jpeg" alt="Logo" class="sb-logo-img">
+            <span class="brand-mark">OS</span>
             <div>
                 <strong>Oppa's Samgyeopsal</strong>
-                <span>ATTENDANCE &amp; PAYROLL</span>
+                <span>Attendance &amp; Payroll</span>
             </div>
         </div>
 
-        <div class="sb-label">WORKSPACE</div>
+        <div class="sb-label">Workspace</div>
         <nav class="sb-nav">
             <?php foreach ($nav as $key => $item): ?>
                 <a href="<?= $item[1] ?>" class="<?= $key === $active ? 'active' : '' ?>">
-                    <svg viewBox="0 0 24 24"><?= $item[2] ?></svg>
+                    <svg class="icon" viewBox="0 0 24 24"><?= $item[2] ?></svg>
                     <?= $item[0] ?>
                 </a>
             <?php endforeach; ?>
@@ -83,8 +82,14 @@ $nav = [
 
     <div class="main">
         <div class="page-top">
-            <span class="eyebrow">Attendance &amp; Payroll Portal</span>
-            <span class="date-pill"><?= date('M j, Y') ?></span>
+            <span class="portal-label">
+                <img src="/attendance/assets/images/icons/layout-dashboard.svg" alt="">
+                Attendance &amp; Payroll Portal
+            </span>
+            <span class="date-pill">
+                <svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+                <?= date('M j, Y') ?>
+            </span>
         </div>
 
         <div class="content">

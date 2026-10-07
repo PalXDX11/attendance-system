@@ -21,9 +21,9 @@ $nowIn = $pdo->query("
     LIMIT 8
 ")->fetchAll();
 
-$pageTitle = 'Dashboard';
+$pageTitle = 'Overview';
 $active    = 'dashboard';
-$eyebrow   = 'Overview';
+$eyebrow   = 'Dashboard';
 $subtitle  = 'Welcome, admin! Here is what is happening today.';
 require '../includes/header.php';
 ?>
@@ -51,7 +51,7 @@ require '../includes/header.php';
     <div class="panel">
         <div class="panel-head">
             <h3>Clocked in right now</h3>
-            <a class="btn sm gray" href="live.php">Open Live Monitor</a>
+            <a class="btn sm gray" href="live.php">Open live attendance</a>
         </div>
         <?php if ($nowIn): ?>
         <div class="table-wrap">
