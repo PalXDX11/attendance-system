@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: flex; flex-direction: column; justify-content: space-between;
             padding: 44px 48px 48px;
             color: #fff;
-            background: #181614 url('/attendance/assets/images/login-bg.jpg') center / cover no-repeat;
+            background: var(--sidebar) url('/attendance/assets/images/login-bg.jpg') center / cover no-repeat;
             overflow: hidden;
         }
         .ls-left::before {
@@ -73,15 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 24px;
             padding: 36px;
             box-shadow: 0 18px 48px rgba(0, 0, 0, .18);
-            color: #FFFDFC;
+            color: #fff;
         }
         .ls-form .mobile-brand { display: none; }
         .ls-heading { display: flex; flex-direction: column; gap: 10px; }
-        .ls-heading .eyebrow { color: #FFFDFC; font-size: 10px; }
+        .ls-heading .eyebrow { color: #fff; font-size: 10px; }
         .ls-form h1 { font-size: 30px; line-height: 1.15; }
         .ls-form .sub { font-size: 13px; line-height: 1.5; margin: 0; }
         .ls-fields { display: flex; flex-direction: column; gap: 18px; }
-        .ls-form label { color: #FFFDFC; font-size: 13px; margin-bottom: 8px; }
+        .ls-form label { color: #fff; font-size: 13px; margin-bottom: 8px; }
         .ls-input {
             display: flex; align-items: center; gap: 12px;
             height: 54px; padding: 0 16px;
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid var(--border);
             border-radius: var(--radius-input);
         }
-        .ls-input:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(231, 90, 60, .25); }
+        .ls-input:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(192, 57, 43, .25); }
         .ls-input img { width: 18px; height: 18px; flex-shrink: 0; }
         .ls-input input { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: transparent; font-size: 13px; }
         .ls-input input:focus { box-shadow: none; }
