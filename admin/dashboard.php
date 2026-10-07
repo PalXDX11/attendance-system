@@ -12,14 +12,18 @@ $secsWeek  = (int)$pdo->query("
     WHERE clock_out IS NOT NULL AND YEARWEEK(clock_in, 1) = YEARWEEK(CURDATE(), 1)
 ")->fetchColumn();
 
-$nowIn = $pdo->query("
+$stmt = $pdo->query("
     SELECT e.name, a.clock_in
     FROM attendance_logs a
     JOIN employees e ON e.id = a.employee_id
     WHERE a.clock_out IS NULL
     ORDER BY a.clock_in ASC
     LIMIT 8
-")->fetchAll();
+");
+$nowIn = [];
+while ($row = $stmt->fetch()) {
+    $nowIn[] = $row;
+}
 
 $pageTitle = 'Overview';
 $active    = 'dashboard';

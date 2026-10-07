@@ -1,6 +1,7 @@
 <?php
 require '../auth.php';
 require '../db.php';
+require_once '../includes/functions.php';
 requireAdmin();
 
 date_default_timezone_set('Asia/Manila');
@@ -47,7 +48,7 @@ $tot = ['secs' => 0, 'gross' => 0, 'ded' => 0, 'net' => 0];
 foreach ($all as $r) {
     if ($r['status'] === 'inactive' && $r['secs'] == 0 && $r['ded'] == 0 && $r['open_count'] == 0) continue;
     $hours = $r['secs'] / 3600;
-    $gross = round($hours * $r['hourly_rate'], 2);
+    $gross = computePay($r['secs'], $r['hourly_rate']);
     $ded   = (float)$r['ded'];
     $net   = $gross - $ded;
     $rows[] = $r + ['hours' => $hours, 'gross' => $gross, 'net' => $net];
@@ -55,10 +56,6 @@ foreach ($all as $r) {
     $tot['gross'] += $gross;
     $tot['ded']   += $ded;
     $tot['net']   += $net;
-}
-
-function peso($n) {
-    return ($n < 0 ? '-₱' : '₱') . number_format(abs($n), 2);
 }
 
 $pageTitle = 'Payroll Summary (Weekly)';

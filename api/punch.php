@@ -1,5 +1,6 @@
 <?php
 require '../db.php';
+require_once '../includes/functions.php';
 header('Content-Type: application/json');
 
 $fingerprintId = $_POST['fingerprint_id'] ?? null;
@@ -32,13 +33,13 @@ if ($open) {
     $stmt = $pdo->prepare("SELECT TIMESTAMPDIFF(SECOND, clock_in, clock_out) AS secs FROM attendance_logs WHERE id = ?");
     $stmt->execute([$open['id']]);
     $secs = $stmt->fetch()['secs'];
-    $pay = round(($secs / 3600) * $emp['hourly_rate'], 2);
+    $pay = computePay($secs, $emp['hourly_rate']);
 
     echo json_encode([
         'status' => 'ok',
         'action' => 'clock_out',
         'name' => $emp['name'],
-        'hours' => round($secs / 3600, 2),
+        'hours' => secondsToHours($secs),
         'pay' => $pay
     ]);
 } else {

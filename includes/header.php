@@ -9,16 +9,7 @@
  */
 date_default_timezone_set('Asia/Manila');
 
-if (!function_exists('initials')) {
-    function initials($name) {
-        $parts = preg_split('/\s+/', trim($name));
-        $i = strtoupper(substr($parts[0] ?? '', 0, 1));
-        if (count($parts) > 1) {
-            $i .= strtoupper(substr(end($parts), 0, 1));
-        }
-        return $i !== '' ? $i : '?';
-    }
-}
+require_once __DIR__ . '/functions.php';
 
 $pageTitle = $pageTitle ?? 'Admin';
 $active    = $active ?? '';

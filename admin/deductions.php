@@ -1,6 +1,7 @@
 <?php
 require '../auth.php';
 require '../db.php';
+require_once '../includes/functions.php';
 requireAdmin();
 
 $msg = "";
@@ -25,8 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $pdo->prepare("INSERT INTO deductions (employee_id, amount, reason, applied_by) VALUES (?, ?, ?, ?)")
             ->execute([$empId, $amount, $reason, $uid]);
-        $pdo->prepare("INSERT INTO audit_logs (user_id, action, details) VALUES (?, 'add_deduction', ?)")
-            ->execute([$uid, "{$emp['name']}: -" . number_format($amount, 2) . " ($reason)"]);
+        logAction($pdo, $uid, 'add_deduction', "{$emp['name']}: -" . number_format($amount, 2) . " ($reason)");
         $msg = "Deduction of ₱" . number_format($amount, 2) . " applied to " . htmlspecialchars($emp['name']) . ".";
     }
 }

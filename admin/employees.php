@@ -1,64 +1,62 @@
 <?php
 require '../auth.php';
 require '../db.php';
+require_once '../includes/functions.php';
 requireAdmin();
 
 $msg = "";
 $msgType = "success";
 $uid = $_SESSION['user_id'];
 
-function logAction($pdo, $uid, $action, $details) {
-    $pdo->prepare("INSERT INTO audit_logs (user_id, action, details) VALUES (?, ?, ?)")
-        ->execute([$uid, $action, $details]);
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
-    if ($action === 'add') {
-        $name = trim($_POST['name']);
-        $fid  = (int)$_POST['fingerprint_id'];
-        $rate = (float)$_POST['hourly_rate'];
-        try {
-            $pdo->prepare("INSERT INTO employees (name, fingerprint_id, hourly_rate) VALUES (?, ?, ?)")
-                ->execute([$name, $fid, $rate]);
-            logAction($pdo, $uid, 'add_employee', "Added $name (FP $fid, rate $rate)");
-            $msg = htmlspecialchars($name) . " was added.";
-        } catch (PDOException $e) {
-            $msg = "Error: that fingerprint ID is already in use.";
-            $msgType = "error";
-        }
-    }
+    switch ($action) {
+        case 'add':
+            $name = trim($_POST['name']);
+            $fid  = (int)$_POST['fingerprint_id'];
+            $rate = (float)$_POST['hourly_rate'];
+            try {
+                $pdo->prepare("INSERT INTO employees (name, fingerprint_id, hourly_rate) VALUES (?, ?, ?)")
+                    ->execute([$name, $fid, $rate]);
+                logAction($pdo, $uid, 'add_employee', "Added $name (FP $fid, rate $rate)");
+                $msg = htmlspecialchars($name) . " was added.";
+            } catch (PDOException $e) {
+                $msg = "Error: that fingerprint ID is already in use.";
+                $msgType = "error";
+            }
+            break;
 
-    if ($action === 'update_rate') {
-        $id   = (int)$_POST['id'];
-        $rate = (float)$_POST['hourly_rate'];
-        if ($rate < 0) {
-            $msg = "Rate cannot be negative.";
-            $msgType = "error";
-        } else {
-            $stmt = $pdo->prepare("SELECT name, hourly_rate FROM employees WHERE id = ?");
+        case 'update_rate':
+            $id   = (int)$_POST['id'];
+            $rate = (float)$_POST['hourly_rate'];
+            if ($rate < 0) {
+                $msg = "Rate cannot be negative.";
+                $msgType = "error";
+            } else {
+                $stmt = $pdo->prepare("SELECT name, hourly_rate FROM employees WHERE id = ?");
+                $stmt->execute([$id]);
+                $emp = $stmt->fetch();
+                if ($emp) {
+                    $pdo->prepare("UPDATE employees SET hourly_rate = ? WHERE id = ?")->execute([$rate, $id]);
+                    logAction($pdo, $uid, 'update_rate', "{$emp['name']}: {$emp['hourly_rate']} -> $rate");
+                    $msg = "Updated rate for " . htmlspecialchars($emp['name']) . ".";
+                }
+            }
+            break;
+
+        case 'toggle_status':
+            $id = (int)$_POST['id'];
+            $stmt = $pdo->prepare("SELECT name, status FROM employees WHERE id = ?");
             $stmt->execute([$id]);
             $emp = $stmt->fetch();
             if ($emp) {
-                $pdo->prepare("UPDATE employees SET hourly_rate = ? WHERE id = ?")->execute([$rate, $id]);
-                logAction($pdo, $uid, 'update_rate', "{$emp['name']}: {$emp['hourly_rate']} -> $rate");
-                $msg = "Updated rate for " . htmlspecialchars($emp['name']) . ".";
+                $new = $emp['status'] === 'active' ? 'inactive' : 'active';
+                $pdo->prepare("UPDATE employees SET status = ? WHERE id = ?")->execute([$new, $id]);
+                logAction($pdo, $uid, 'set_status', "{$emp['name']}: {$emp['status']} -> $new");
+                $msg = htmlspecialchars($emp['name']) . " is now $new.";
             }
-        }
-    }
-
-    if ($action === 'toggle_status') {
-        $id = (int)$_POST['id'];
-        $stmt = $pdo->prepare("SELECT name, status FROM employees WHERE id = ?");
-        $stmt->execute([$id]);
-        $emp = $stmt->fetch();
-        if ($emp) {
-            $new = $emp['status'] === 'active' ? 'inactive' : 'active';
-            $pdo->prepare("UPDATE employees SET status = ? WHERE id = ?")->execute([$new, $id]);
-            logAction($pdo, $uid, 'set_status', "{$emp['name']}: {$emp['status']} -> $new");
-            $msg = htmlspecialchars($emp['name']) . " is now $new.";
-        }
+            break;
     }
 }
 
