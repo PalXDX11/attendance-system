@@ -304,3 +304,26 @@ td input[type=number] { height: 30px; width: 96px; padding: 0 10px; }
   .content { padding: 20px 16px 40px; }
   .page-top { padding: 0 16px; }
 }
+
+/* ============ Figma component details ============ */
+.sb-brand strong { white-space: nowrap; font-size: 13px; }
+td .avatar { background: var(--surface-alt); color: var(--muted); }
+.emp-name { display: block; font-size: 12px; color: var(--text); }
+.emp-sub { display: block; font-size: 9.5px; color: var(--faint); margin-top: 2px; }
+td.amount-strong { font-weight: 700; color: var(--text); }
+td.muted-cell { color: var(--muted); }
+.input-icon { position: relative; }
+.input-icon .icon {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; fill: none; stroke: var(--muted); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round; pointer-events: none;
+}
+.input-icon input, .input-icon select { padding-left: 38px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.split-rates { display: grid; grid-template-columns: minmax(0, 1fr) 366px; gap: 20px; align-items: start; }
+.rate-form { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; white-space: nowrap; }
+.rate-form input[type=number] { width: 88px; height: 32px; font-weight: 700; }
+.rate-form .per { font-size: 12px; }
+button.soft { background: var(--surface-alt); border-color: var(--surface-alt); color: var(--text); }
+button.soft:hover { background: var(--border); border-color: var(--border); }
+@media (max-width: 1100px) { .split-rates { grid-template-columns: 1fr; } }

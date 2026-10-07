@@ -56,7 +56,7 @@ $nav = [
             <span class="brand-mark">OS</span>
             <div>
                 <strong>Oppa's Samgyeopsal</strong>
-                <span>Attendance &amp; Payroll</span>
+                <span>People operations</span>
             </div>
         </div>
 
